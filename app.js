@@ -101,14 +101,19 @@ async function checkNumber() {
     }
     
     if (results.length > 0) {
-        let msg = `🎉 *WINNER!* Number *${number}*\n\n`;
-        msg += `Found in ${results.length} draw(s) across ${totalDrawsChecked} draws checked\n\n`;
+        let html = `<div class="winner-header">🎉 WINNER! Number: <strong>${number}</strong></div>`;
+        html += `<p class="result-summary">Found ${results.length} win(s) across ${totalDrawsChecked} draw(s)</p>`;
+        html += `<table class="results-table">`;
+        html += `<tr><th>Lottery</th><th>Prize</th><th>Date</th></tr>`;
         results.forEach(r => {
-            msg += `${r.lottery.toUpperCase()} ${r.prize} on ${formatDate(r.date)}\n`;
+            html += `<tr><td>${r.lottery.toUpperCase()}</td><td>${r.prize}</td><td>${formatDate(r.date)}</td></tr>`;
         });
-        showResult(msg, 'winner');
+        html += `</table>`;
+        showResult(html, 'winner');
     } else {
-        showResult(`❌ No wins for *${number}*\nChecked ${totalDrawsChecked} draw(s) across ${lotteries.join(', ')}`, 'loser');
+        const html = `<div class="no-win">❌ No wins for <strong>${number}</strong></div>` +
+            `<p class="result-summary">Checked ${totalDrawsChecked} draw(s) across ${lotteries.join(', ')}</p>`;
+        showResult(html, 'loser');
     }
 }
 
