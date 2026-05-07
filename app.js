@@ -18,8 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('result-date').value = today;
     
-    // Load results for first lottery by default
-    setTimeout(() => loadResults(), 100);
+    // Load results and analysis for first lottery by default
+    setTimeout(() => {
+        loadResults();
+        showSummary();
+    }, 100);
 });
 
 // Tab navigation
@@ -29,7 +32,13 @@ function setupTabs() {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             tab.classList.add('active');
-            document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+            const targetTab = document.getElementById(tab.dataset.tab + '-tab');
+            targetTab.classList.add('active');
+            
+            // Auto-load analysis when tab is opened
+            if (tab.dataset.tab === 'analysis') {
+                showSummary();
+            }
         });
     });
 }
