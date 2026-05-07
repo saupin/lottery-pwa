@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
         loadResults();
         showSummary();
     }, 100);
+    
+    // Setup button handlers
+    document.querySelector('.btn-primary').addEventListener('click', checkNumber);
+    document.querySelector('.btn-secondary').addEventListener('click', clearInput);
+    document.querySelector('.btn-small').addEventListener('click', loadResults);
 });
 
 // Tab navigation
