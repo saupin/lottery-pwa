@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <div class="button-row">
-                    <button class="btn-secondary" onclick="clearInput()">🗑️ Clear</button>
-                    <button class="btn-primary" onclick="checkNumber()">🔍 Check Number</button>
+                    <button class="btn-secondary" id="btn-clear">🗑️ Clear</button>
+                    <button class="btn-primary" id="btn-check">🔍 Check Number</button>
                 </div>
                 <div id="check-result" class="result-box"></div>
             </section>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="date-selector">
                     <input type="date" id="result-date">
-                    <button class="btn-small" onclick="loadResults()">Go</button>
+                    <button class="btn-small" id="btn-go">Go</button>
                 </div>
                 <div id="results-display" class="results-container">
                     <p class="hint">Select lottery and date to view results</p>
