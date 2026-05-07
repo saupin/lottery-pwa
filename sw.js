@@ -1,5 +1,5 @@
 // Service Worker for Lottery PWA
-const CACHE_NAME = 'lottery-pwa-v1';
+const CACHE_NAME = 'lottery-pwa-v2';
 const ASSETS = [
   '/',
   '/index.html',
