@@ -126,6 +126,14 @@ async function checkNumber() {
     }
 }
 
+// Clear input field
+function clearInput() {
+    const input = document.getElementById('number-input');
+    input.value = '';
+    input.focus();
+    document.getElementById('check-result').innerHTML = '';
+}
+
 // Show result in box
 function showResult(msg, type) {
     const box = document.getElementById('check-result');
