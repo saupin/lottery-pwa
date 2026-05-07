@@ -1,31 +1,15 @@
-// Service Worker for Lottery PWA
-const CACHE_NAME = 'lottery-pwa-v3';
+// Service Worker for Lottery PWA - Disabled for debugging
+// To re-enable, uncomment the code below
 
-// Install event
-self.addEventListener('install', event => {
-  self.skipWaiting();
-});
+// Clear all caches and unregister
+if ('caches' in window) {
+    caches.keys().then(names => names.forEach(name => caches.delete(name)));
+}
 
-// Activate event
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
-});
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+    });
+}
 
-// Fetch event - network first, fall back to cache
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (response.ok && response.type === 'basic') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        }
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
-});
+console.log('Service Worker disabled for debugging');

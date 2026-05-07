@@ -9,10 +9,19 @@ let lastResults = { damacai: [], toto: [], magnum: [] };
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('App initializing...');
+    
     setupTabs();
+    console.log('Tabs setup done');
+    
     setupLotteryTabs();
+    console.log('Lottery tabs setup done');
+    
     loadLastResults();
+    console.log('Last results loaded');
+    
     setupInstallPrompt();
+    console.log('Install prompt setup done');
     
     // Set default date to today for results
     const today = new Date().toISOString().split('T')[0];
@@ -28,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-check').addEventListener('click', checkNumber);
     document.getElementById('btn-clear').addEventListener('click', clearInput);
     document.getElementById('btn-go').addEventListener('click', loadResults);
+    console.log('Button handlers attached');
+    
+    console.log('App initialization complete');
 });
 
 // Tab navigation
