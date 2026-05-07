@@ -31,6 +31,11 @@
                         <label><input type="checkbox" value="toto" checked> T</label>
                         <label><input type="checkbox" value="magnum" checked> M</label>
                     </div>
+                    <div class="draws-input">
+                        <label for="draws-input">Draws to check:</label>
+                        <input type="number" id="draws-input" placeholder="All (2014-now)" min="1" max="500">
+                        <span class="hint-text">Leave blank for all draws since 2014</span>
+                    </div>
                 </div>
                 <button class="btn-primary" onclick="checkNumber()">🔍 Check Number</button>
                 <div id="check-result" class="result-box"></div>

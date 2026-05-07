@@ -43,6 +43,8 @@ function setupLotteryTabs() {
 async function checkNumber() {
     const input = document.getElementById('number-input');
     const number = input.value.trim();
+    const drawsInput = document.getElementById('draws-input').value;
+    const maxDraws = drawsInput ? parseInt(drawsInput) : Infinity; // Infinity = all draws
     
     if (!/^\d{4}$/.test(number)) {
         showResult('Please enter a valid 4-digit number', 'error');
@@ -60,19 +62,22 @@ async function checkNumber() {
         return;
     }
     
-    showResult('Checking...', 'loading');
+    showResult(`Checking ${number}...`, 'loading');
     
     // Load local data and check
     const results = [];
+    let totalDrawsChecked = 0;
     
     for (const lottery of lotteries) {
         const data = await loadLotteryData(lottery);
         if (!data) continue;
         
-        // Check last 10 draws
+        // Check draws (all or limited)
         const draws = data.draws || [];
-        for (let i = 0; i < Math.min(10, draws.length); i++) {
-            const draw = draws[i];
+        const drawsToCheck = draws.slice(0, maxDraws);
+        totalDrawsChecked += drawsToCheck.length;
+        
+        for (const draw of drawsToCheck) {
             const prizes = draw[lottery] || draw;
             
             ['1st', '2nd', '3rd'].forEach(prize => {
@@ -90,12 +95,13 @@ async function checkNumber() {
     
     if (results.length > 0) {
         let msg = `🎉 *WINNER!* Number *${number}*\n\n`;
+        msg += `Found in ${results.length} draw(s) across ${totalDrawsChecked} draws checked\n\n`;
         results.forEach(r => {
-            msg += `${r.lottery.toUpperCase()} ${r.prize} on ${r.date}\n`;
+            msg += `${r.lottery.toUpperCase()} ${r.prize} on ${formatDate(r.date)}\n`;
         });
         showResult(msg, 'winner');
     } else {
-        showResult(`❌ No wins for *${number}* in last 10 draws of selected lotteries.`, 'loser');
+        showResult(`❌ No wins for *${number}*\nChecked ${totalDrawsChecked} draw(s) across ${lotteries.join(', ')}`, 'loser');
     }
 }
 
