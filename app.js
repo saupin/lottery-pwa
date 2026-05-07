@@ -303,8 +303,6 @@ function showSummary() {
             html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([d, c]) => `<td>${d} (${c})</td>`).join('')}<td></td><td></td></tr>`;
         }
         html += '</table></div>';
-        }
-        html += '</div>';
         
         // ALL SAME DIGIT (1st Prize)
         html += '<div class="analysis-section">';
