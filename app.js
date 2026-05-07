@@ -210,66 +210,92 @@ function showFrequency() {
     analyzeNumbers('frequency');
 }
 
-function analyzeNumbers(type) {
+function showSummary() {
     const display = document.getElementById('analysis-display');
+    display.innerHTML = '<p class="hint">Loading analysis...</p>';
     
-    // Aggregate all numbers from all draws
-    const countMap = {};
-    
-    ['damacai', 'toto', 'magnum'].forEach(lottery => {
-        const data = lastResults[lottery];
-        data.forEach(draw => {
-            const prizes = draw[lottery] || draw;
-            ['1st', '2nd', '3rd'].forEach(p => {
-                const num = prizes[p];
+    // Load all data for all lotteries
+    Promise.all([
+        loadLotteryData('damacai'),
+        loadLotteryData('toto'),
+        loadLotteryData('magnum')
+    ]).then(([damacaiData, totoData, magnumData]) => {
+        const lotteries = {
+            damacai: { data: damacaiData, color: '🟠', name: 'Damacai' },
+            toto: { data: totoData, color: '🔴', name: 'Toto' },
+            magnum: { data: magnumData, color: '🟢', name: 'Magnum' }
+        };
+        
+        let html = '';
+        
+        // HOT FIRST DIGITS
+        html += '<div class="analysis-section">';
+        html += '<h4>🔥 HOT FIRST DIGITS</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const firstDigitCounts = {};
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['1st'];
                 if (num) {
-                    countMap[num] = (countMap[num] || 0) + 1;
+                    const first = num.toString()[0];
+                    firstDigitCounts[first] = (firstDigitCounts[first] || 0) + 1;
                 }
             });
-        });
+            const top3 = Object.entries(firstDigitCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            html += `<p>${lot.color} ${lot.name}: ${top3.map(([d, c]) => `${d} (${c})`).join(', ')}</p>`;
+        }
+        html += '</div>';
+        
+        // HOT LAST DIGITS
+        html += '<div class="analysis-section">';
+        html += '<h4>🔥 HOT LAST DIGITS</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const lastDigitCounts = {};
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['1st'];
+                if (num) {
+                    const last = num.toString().slice(-1);
+                    lastDigitCounts[last] = (lastDigitCounts[last] || 0) + 1;
+                }
+            });
+            const top3 = Object.entries(lastDigitCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            html += `<p>${lot.color} ${lot.name}: ${top3.map(([d, c]) => `${d} (${c})`).join(', ')}</p>`;
+        }
+        html += '</div>';
+        
+        // ALL SAME DIGIT (1st Prize)
+        html += '<div class="analysis-section">';
+        html += '<h4>🔄 ALL SAME DIGIT (1st Prize)</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const sameDigit = [];
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['1st'];
+                if (num && num.toString().length === 4) {
+                    const s = num.toString();
+                    if (s[0] === s[1] && s[1] === s[2] && s[2] === s[3]) {
+                        if (!sameDigit.includes(s)) sameDigit.push(s);
+                    }
+                }
+            });
+            html += `<p>${lot.color} ${lot.name}: ${sameDigit.length ? sameDigit.join(', ') : 'None'}</p>`;
+        }
+        html += '</div>';
+        
+        // MOST COMMON 1ST PRIZE
+        html += '<div class="analysis-section">';
+        html += '<h4>📈 MOST COMMON 1ST PRIZE</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const countMap = {};
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['1st'];
+                if (num) countMap[num] = (countMap[num] || 0) + 1;
+            });
+            const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+        }
+        html += '</div>';
+        
+        display.innerHTML = html;
     });
-    
-    const entries = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
-    
-    if (type === 'hot') {
-        const hot = entries.slice(0, 20);
-        display.innerHTML = `
-            <h4>🔥 Hot Numbers (Most Frequent)</h4>
-            <div class="hot-list">
-                ${hot.map(([num, count]) => `
-                    <div class="number-badge hot">
-                        ${num}
-                        <small style="display:block;font-size:0.7rem">${count}x</small>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } else if (type === 'cold') {
-        const cold = entries.slice(-20).reverse();
-        display.innerHTML = `
-            <h4>❄️ Cold Numbers (Least Frequent)</h4>
-            <div class="cold-list">
-                ${cold.map(([num, count]) => `
-                    <div class="number-badge cold">
-                        ${num}
-                        <small style="display:block;font-size:0.7rem">${count}x</small>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } else if (type === 'frequency') {
-        display.innerHTML = `
-            <h4>📊 Number Frequency (All Draws)</h4>
-            <div style="max-height:300px;overflow-y:auto">
-                ${entries.map(([num, count]) => `
-                    <div class="prize-item">
-                        <span class="prize-number">${num}</span>
-                        <span>${count} appearances</span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
 }
 
 // Format date nicely

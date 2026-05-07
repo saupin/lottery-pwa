@@ -156,6 +156,24 @@ main {
     color: #b2bec3;
 }
 
+.analysis-section {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.analysis-section h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.analysis-section p {
+    padding: 5px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
 .btn-primary {
     width: 100%;
     padding: 15px;
