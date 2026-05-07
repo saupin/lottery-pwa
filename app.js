@@ -294,6 +294,56 @@ function showSummary() {
         }
         html += '</div>';
         
+        // MOST COMMON 2ND PRIZE
+        html += '<div class="analysis-section">';
+        html += '<h4>📈 MOST COMMON 2ND PRIZE</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const countMap = {};
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['2nd'];
+                if (num) countMap[num] = (countMap[num] || 0) + 1;
+            });
+            const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+        }
+        html += '</div>';
+        
+        // MOST COMMON 3RD PRIZE
+        html += '<div class="analysis-section">';
+        html += '<h4>📈 MOST COMMON 3RD PRIZE</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const countMap = {};
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['3rd'];
+                if (num) countMap[num] = (countMap[num] || 0) + 1;
+            });
+            const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+        }
+        html += '</div>';
+        
+        // CONSECUTIVE NUMBERS (1st Prize)
+        html += '<div class="analysis-section">';
+        html += '<h4>🔢 CONSECUTIVE NUMBERS (1st Prize)</h4>';
+        for (const [key, lot] of Object.entries(lotteries)) {
+            const consecutive = [];
+            lot.data.draws.forEach(draw => {
+                const num = (draw[key] || draw)['1st'];
+                if (num && num.toString().length === 4) {
+                    const s = num.toString();
+                    const n = parseInt(s);
+                    // Check if digits are consecutive (e.g., 1234, 2345, 3456, 4567, 5678, 6789)
+                    // or same pattern (e.g., 0123, 1234, 2345...)
+                    const d = [parseInt(s[0]), parseInt(s[1]), parseInt(s[2]), parseInt(s[3])];
+                    const isConsec = (d[1] === d[0] + 1 && d[2] === d[1] + 1 && d[3] === d[2] + 1) ||
+                                    (d[1] === d[0] - 1 && d[2] === d[1] - 1 && d[3] === d[2] - 1);
+                    if (isConsec && !consecutive.includes(s)) consecutive.push(s);
+                }
+            });
+            html += `<p>${lot.color} ${lot.name}: ${consecutive.length ? consecutive.join(', ') : 'None'}</p>`;
+        }
+        html += '</div>';
+        
         display.innerHTML = html;
     });
 }
