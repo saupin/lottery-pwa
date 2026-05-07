@@ -246,9 +246,10 @@ function showSummary() {
         
         let html = '';
         
-        // HOT FIRST DIGITS
+        // HOT FIRST DIGITS - Table format
         html += '<div class="analysis-section">';
         html += '<h4>🔥 HOT FIRST DIGITS</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>1st</th><th>2nd</th><th>3rd</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const firstDigitCounts = {};
             lot.data.draws.forEach(draw => {
@@ -259,13 +260,14 @@ function showSummary() {
                 }
             });
             const top3 = Object.entries(firstDigitCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-            html += `<p>${lot.color} ${lot.name}: ${top3.map(([d, c]) => `${d} (${c})`).join(', ')}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([d, c]) => `<td>${d} (${c})</td>`).join('')}<td></td><td></td></tr>`;
         }
-        html += '</div>';
+        html += '</table></div>';
         
-        // HOT LAST DIGITS
+        // HOT LAST DIGITS - Table format
         html += '<div class="analysis-section">';
         html += '<h4>🔥 HOT LAST DIGITS</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>1st</th><th>2nd</th><th>3rd</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const lastDigitCounts = {};
             lot.data.draws.forEach(draw => {
@@ -276,7 +278,9 @@ function showSummary() {
                 }
             });
             const top3 = Object.entries(lastDigitCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-            html += `<p>${lot.color} ${lot.name}: ${top3.map(([d, c]) => `${d} (${c})`).join(', ')}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([d, c]) => `<td>${d} (${c})</td>`).join('')}<td></td><td></td></tr>`;
+        }
+        html += '</table></div>';
         }
         html += '</div>';
         
@@ -298,9 +302,10 @@ function showSummary() {
         }
         html += '</div>';
         
-        // MOST COMMON 1ST PRIZE
+        // MOST COMMON 1ST PRIZE - Table format
         html += '<div class="analysis-section">';
         html += '<h4>📈 MOST COMMON 1ST PRIZE</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>#1</th><th>#2</th><th>#3</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const countMap = {};
             lot.data.draws.forEach(draw => {
@@ -308,13 +313,14 @@ function showSummary() {
                 if (num) countMap[num] = (countMap[num] || 0) + 1;
             });
             const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
-            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([n, c]) => `<td>${n} (${c}x)</td>`).join('')}<td></td><td></td></tr>`;
         }
-        html += '</div>';
+        html += '</table></div>';
         
-        // MOST COMMON 2ND PRIZE
+        // MOST COMMON 2ND PRIZE - Table format
         html += '<div class="analysis-section">';
         html += '<h4>📈 MOST COMMON 2ND PRIZE</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>#1</th><th>#2</th><th>#3</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const countMap = {};
             lot.data.draws.forEach(draw => {
@@ -322,13 +328,14 @@ function showSummary() {
                 if (num) countMap[num] = (countMap[num] || 0) + 1;
             });
             const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
-            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([n, c]) => `<td>${n} (${c}x)</td>`).join('')}<td></td><td></td></tr>`;
         }
-        html += '</div>';
+        html += '</table></div>';
         
-        // MOST COMMON 3RD PRIZE
+        // MOST COMMON 3RD PRIZE - Table format
         html += '<div class="analysis-section">';
         html += '<h4>📈 MOST COMMON 3RD PRIZE</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>#1</th><th>#2</th><th>#3</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const countMap = {};
             lot.data.draws.forEach(draw => {
@@ -336,31 +343,29 @@ function showSummary() {
                 if (num) countMap[num] = (countMap[num] || 0) + 1;
             });
             const top3 = Object.entries(countMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
-            html += `<p>${lot.color} ${lot.name}: ${top3.map(([n, c]) => `${n} (${c}x)`).join(', ')}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td>${top3.map(([n, c]) => `<td>${n} (${c}x)</td>`).join('')}<td></td><td></td></tr>`;
         }
-        html += '</div>';
+        html += '</table></div>';
         
         // CONSECUTIVE NUMBERS (1st Prize)
         html += '<div class="analysis-section">';
         html += '<h4>🔢 CONSECUTIVE NUMBERS (1st Prize)</h4>';
+        html += '<table class="summary-table"><tr><th>Lottery</th><th>Numbers</th></tr>';
         for (const [key, lot] of Object.entries(lotteries)) {
             const consecutive = [];
             lot.data.draws.forEach(draw => {
                 const num = (draw[key] || draw)['1st'];
                 if (num && num.toString().length === 4) {
                     const s = num.toString();
-                    const n = parseInt(s);
-                    // Check if digits are consecutive (e.g., 1234, 2345, 3456, 4567, 5678, 6789)
-                    // or same pattern (e.g., 0123, 1234, 2345...)
                     const d = [parseInt(s[0]), parseInt(s[1]), parseInt(s[2]), parseInt(s[3])];
                     const isConsec = (d[1] === d[0] + 1 && d[2] === d[1] + 1 && d[3] === d[2] + 1) ||
                                     (d[1] === d[0] - 1 && d[2] === d[1] - 1 && d[3] === d[2] - 1);
                     if (isConsec && !consecutive.includes(s)) consecutive.push(s);
                 }
             });
-            html += `<p>${lot.color} ${lot.name}: ${consecutive.length ? consecutive.join(', ') : 'None'}</p>`;
+            html += `<tr><td>${lot.color} ${lot.name}</td><td>${consecutive.length ? consecutive.join(', ') : 'None'}</td></tr>`;
         }
-        html += '</div>';
+        html += '</table></div>';
         
         display.innerHTML = html;
     });
