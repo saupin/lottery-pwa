@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLotteryTabs();
     loadLastResults();
     setupInstallPrompt();
+    
+    // Set default date to today for results
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('result-date').value = today;
+    
+    // Load results for first lottery by default
+    setTimeout(() => loadResults(), 100);
 });
 
 // Tab navigation
@@ -153,18 +160,24 @@ async function loadResults() {
     const dateInput = document.getElementById('result-date').value;
     const display = document.getElementById('results-display');
     
-    if (!dateInput) {
-        display.innerHTML = '<p class="hint">Select a date to view results</p>';
-        return;
-    }
-    
     display.innerHTML = '<p class="hint">Loading...</p>';
     
     const data = await loadLotteryData(currentLottery);
-    const draw = data.draws.find(d => d.date === dateInput);
+    let draw = null;
+    
+    if (dateInput) {
+        draw = data.draws.find(d => d.date === dateInput);
+    }
+    
+    // If no date or no results for that date, show latest
+    if (!draw && data.draws && data.draws.length > 0) {
+        draw = data.draws[0]; // Latest draw
+        // Update date input to show the actual date
+        document.getElementById('result-date').value = draw.date;
+    }
     
     if (!draw) {
-        display.innerHTML = '<p class="hint">No results for this date</p>';
+        display.innerHTML = '<p class="hint">No results available</p>';
         return;
     }
     
