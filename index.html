@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6C5CE7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>🎰 Lottery Checker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>🎰 Lottery</h1>
+            <div class="tabs">
+                <button class="tab active" data-tab="check">Check</button>
+                <button class="tab" data-tab="results">Results</button>
+                <button class="tab" data-tab="analysis">Analysis</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Check Tab -->
+            <section id="check-tab" class="tab-content active">
+                <div class="input-group">
+                    <input type="text" id="number-input" placeholder="Enter 4-digit number" maxlength="4" pattern="[0-9]*" inputmode="numeric">
+                    <div class="lottery-select">
+                        <label><input type="checkbox" value="damacai" checked> D</label>
+                        <label><input type="checkbox" value="toto" checked> T</label>
+                        <label><input type="checkbox" value="magnum" checked> M</label>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="checkNumber()">🔍 Check Number</button>
+                <div id="check-result" class="result-box"></div>
+            </section>
+
+            <!-- Results Tab -->
+            <section id="results-tab" class="tab-content">
+                <div class="lottery-tabs">
+                    <button class="lottery-tab active" data-lottery="damacai">Damacai</button>
+                    <button class="lottery-tab" data-lottery="toto">Toto</button>
+                    <button class="lottery-tab" data-lottery="magnum">Magnum</button>
+                </div>
+                <div class="date-selector">
+                    <input type="date" id="result-date">
+                    <button class="btn-small" onclick="loadResults()">Go</button>
+                </div>
+                <div id="results-display" class="results-container">
+                    <p class="hint">Select lottery and date to view results</p>
+                </div>
+            </section>
+
+            <!-- Analysis Tab -->
+            <section id="analysis-tab" class="tab-content">
+                <div class="analysis-options">
+                    <button class="btn-secondary" onclick="showHotNumbers()">🔥 Hot Numbers</button>
+                    <button class="btn-secondary" onclick="showColdNumbers()">❄️ Cold Numbers</button>
+                    <button class="btn-secondary" onclick="showFrequency()">📊 Frequency</button>
+                </div>
+                <div id="analysis-display" class="result-box"></div>
+            </section>
+        </main>
+
+        <footer>
+            <small>Data from past draws • Not a real gambling app</small>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
