@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><strong>First Digit Hot (5%):</strong> Extra bonus if first digit is the hottest</li>
                     <li><strong>Total:</strong> Score = (position matches × 20) + sum bonus + first digit bonus</li>
                 </ul>
-                <p style="margin-top:10px;font-size:0.8rem;color:#6e6e6e">
-                    <strong>Color Guide:</strong> 🟢 Green ≥75% | 🟡 Yellow >25% & <75% | 🔴 Red ≤25%
+                <p style="margin-top:10px;font-size:0.75rem;color:#6e6e6e">
+                    <strong>Color:</strong> 🟢 ≥75% | 🟡 >25% & <75% | 🔴 ≤25%
                 </p>
             `;
             document.getElementById('btn-check-algorithm').textContent = '📊 Hide Algorithm';
@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-check-algorithm').textContent = '📊 View Algorithm';
         }
     });
+    
+    console.log('Button handlers attached');
+
+    console.log('App initialization complete');
     console.log('Button handlers attached');
     
     console.log('App initialization complete');
