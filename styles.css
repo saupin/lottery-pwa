@@ -397,3 +397,89 @@ footer {
     color: var(--grey);
     padding: 40px 20px;
 }
+
+/* Predict Tab */
+.predict-section {
+    padding: 15px;
+}
+
+.predict-section h3 {
+    color: var(--red);
+}
+
+.predict-section p {
+    font-size: 0.9rem;
+}
+
+.predict-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.predict-buttons .btn-secondary {
+    flex: 1;
+    padding: 14px;
+}
+
+.predict-result {
+    background: var(--white);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+}
+
+.predicted-number {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: Georgia, serif;
+    color: var(--red);
+    margin: 15px 0;
+    letter-spacing: 8px;
+}
+
+.prediction-label {
+    font-size: 0.85rem;
+    color: var(--grey);
+    margin-bottom: 10px;
+}
+
+.prediction-stats {
+    font-size: 0.8rem;
+    color: var(--grey);
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-grey);
+}
+
+.prediction-history {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.prediction-history h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.history-list {
+    list-style: none;
+}
+
+.history-list li {
+    padding: 8px;
+    border-bottom: 1px solid var(--light-grey);
+    display: flex;
+    justify-content: space-between;
+}
+
+.history-list li:last-child {
+    border-bottom: none;
+}
+
+.history-number {
+    font-weight: 700;
+    font-family: Georgia, serif;
+}

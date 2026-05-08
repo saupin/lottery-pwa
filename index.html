@@ -17,6 +17,7 @@
             <div class="tabs">
                 <button class="tab active" data-tab="check">Check</button>
                 <button class="tab" data-tab="results">Results</button>
+                <button class="tab" data-tab="predict">Predict</button>
                 <button class="tab" data-tab="analysis">Analysis</button>
             </div>
         </header>
@@ -52,6 +53,20 @@
                 </div>
                 <div id="results-display" class="results-container">
                     <p class="hint">Select date to view all lottery results</p>
+                </div>
+            </section>
+
+            <!-- Predict Tab -->
+            <section id="predict-tab" class="tab-content">
+                <div class="predict-section">
+                    <h3 style="text-align:center;margin-bottom:15px">🎯 Number Predictor</h3>
+                    <p style="text-align:center;color:#6e6e6e;margin-bottom:20px">Based on DaMaCai patterns (2014-2026)</p>
+                    <div class="button-row">
+                        <button class="btn-secondary" id="btn-predict-dmc">DaMaCai</button>
+                        <button class="btn-secondary" id="btn-predict-toto">Toto</button>
+                        <button class="btn-secondary" id="btn-predict-magnum">Magnum</button>
+                    </div>
+                    <div id="predict-display" class="predict-result"></div>
                 </div>
             </section>
 
