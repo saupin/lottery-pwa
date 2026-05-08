@@ -400,7 +400,9 @@ footer {
 
 /* Predict Tab */
 .predict-section {
-    padding: 15px;
+    padding: 20px;
+    background: var(--white);
+    min-height: 60vh;
 }
 
 .predict-section h3 {
@@ -423,10 +425,21 @@ footer {
 }
 
 .predict-result {
-    background: var(--white);
+    background: var(--very-light);
     border-radius: 4px;
     padding: 20px;
     text-align: center;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.predict-result:empty::before {
+    content: 'Tap a button above to generate a number';
+    color: var(--grey);
+    font-size: 0.9rem;
 }
 
 .predicted-number {
