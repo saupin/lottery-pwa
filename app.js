@@ -477,27 +477,33 @@ if ('serviceWorker' in navigator) {
 
 // ===== PREDICTION ENGINE =====
 
-// Pre-computed frequency analysis (updated from 2029 draws)
+// Pre-computed frequency analysis from historical data
 const PREDICTION_DATA = {
     damacai: {
-        digitFreq: [0,2389,2476,2375,2474,2494,2469,2445,2365,2393],
+        name: 'DaMaCai',
+        draws: 2029,
         positionHot: [['5','4','8'],['0','9','8'],['9','4','7'],['7','6','8']],
         avgSum: 53.8,
         sumRange: [40, 60],
-        recentDraws: ['5991'] // last 50 draws only had 1 repeat
+        sumCoverage: '65.8%',
+        recentDraws: ['5991']
     },
     toto: {
-        digitFreq: [0,2389,2476,2375,2474,2494,2469,2445,2365,2393],
-        positionHot: [['5','4','8'],['0','9','8'],['9','4','7'],['7','6','8']],
-        avgSum: 53.8,
+        name: 'Toto',
+        draws: 2043,
+        positionHot: [['1','6','5'],['4','3','2'],['1','3','2'],['5','3','4']],
+        avgSum: 53.7,
         sumRange: [40, 60],
+        sumCoverage: '70.5%',
         recentDraws: []
     },
     magnum: {
-        digitFreq: [0,2389,2476,2375,2474,2494,2469,2445,2365,2393],
-        positionHot: [['5','4','8'],['0','9','8'],['9','4','7'],['7','6','8']],
-        avgSum: 53.8,
+        name: 'Magnum',
+        draws: 2055,
+        positionHot: [['6','2','0'],['6','4','8'],['2','4','9'],['6','2','9']],
+        avgSum: 54.2,
         sumRange: [40, 60],
+        sumCoverage: '67.1%',
         recentDraws: []
     }
 };
@@ -522,14 +528,12 @@ function generatePrediction(lottery) {
         }
     }
     
-    const lotteryNames = { damacai: 'DaMaCai', toto: 'Toto', magnum: 'Magnum' };
-    
     display.innerHTML = `
-        <div class="prediction-label">Suggested ${lotteryNames[lottery]} number:</div>
+        <div class="prediction-label">Suggested ${data.name} number:</div>
         <div class="predicted-number">${number}</div>
         <div class="prediction-stats">
-            Based on ${formatNumber(24348)} data points (2014-2026)<br>
-            Avg sum: ${data.avgSum} | Valid range: ${data.sumRange[0]}-${data.sumRange[1]}
+            Based on ${formatNumber(data.draws)} draws (${data.name})<br>
+            Avg sum: ${data.avgSum} | ${data.sumCoverage} of draws fall in 40-60 range
         </div>
     `;
     
@@ -600,18 +604,35 @@ function showAlgorithm() {
         display.style.display = 'block';
         display.innerHTML = `
             <h4>📊 How the Prediction Works</h4>
+            <p style="margin-bottom:15px;font-size:0.9rem">Different lotteries have different patterns! Each is analyzed separately.</p>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:15px">
+                <div style="background:var(--very-light);padding:12px;border-radius:4px;text-align:center">
+                    <strong style="color:var(--red)">DaMaCai</strong><br>
+                    <span style="font-size:0.8rem">2029 draws</span>
+                </div>
+                <div style="background:var(--very-light);padding:12px;border-radius:4px;text-align:center">
+                    <strong style="color:var(--red)">Toto</strong><br>
+                    <span style="font-size:0.8rem">2043 draws</span>
+                </div>
+                <div style="background:var(--very-light);padding:12px;border-radius:4px;text-align:center">
+                    <strong style="color:var(--red)">Magnum</strong><br>
+                    <span style="font-size:0.8rem">2055 draws</span>
+                </div>
+            </div>
+            
+            <p style="margin-bottom:8px;font-weight:600">Hot digits per position (each lottery unique):</p>
             <ul>
-                <li><strong>Position Analysis:</strong> Each digit position has different hot digits based on 2,029 historical draws</li>
-                <li><strong>Pos 1:</strong> Most frequent is <span class="highlight">5</span> (229 times)</li>
-                <li><strong>Pos 2:</strong> Most frequent is <span class="highlight">0</span> (222 times)</li>
-                <li><strong>Pos 3:</strong> Most frequent is <span class="highlight">9</span> (226 times)</li>
-                <li><strong>Pos 4:</strong> Most frequent is <span class="highlight">7</span> (229 times)</li>
-                <li><strong>Sum Validation:</strong> Generated numbers must have digit sum between <span class="highlight">40-60</span> (covers 60% of all draws)</li>
-                <li><strong>Digit Frequency:</strong> Hot digits 5,2,4,6,0 appear more often than 8,3,1,9</li>
-                <li><strong>Weighted Random:</strong> Hot digits have higher chance of selection</li>
-                <li><strong>Avoid Recent:</strong> Skips numbers that appeared in last 50 draws</li>
+                <li><strong>DaMaCai:</strong> Pos1=<span class="highlight">5</span>, Pos2=<span class="highlight">0</span>, Pos3=<span class="highlight">9</span>, Pos4=<span class="highlight">7</span></li>
+                <li><strong>Toto:</strong> Pos1=<span class="highlight">1</span>, Pos2=<span class="highlight">4</span>, Pos3=<span class="highlight">1</span>, Pos4=<span class="highlight">5</span></li>
+                <li><strong>Magnum:</strong> Pos1=<span class="highlight">6</span>, Pos2=<span class="highlight">6</span>, Pos3=<span class="highlight">2</span>, Pos4=<span class="highlight">6</span></li>
             </ul>
-            <p style="margin-top:15px;font-size:0.85rem;color:#6e6e6e">Based on 2,029 DaMaCai draws from 2014-2026 (24,348 total digits analyzed)</p>
+            <ul>
+                <li><strong>Sum Validation:</strong> Numbers must have digit sum between <span class="highlight">40-60</span></li>
+                <li><strong>Coverage:</strong> DaMaCai 65.8%, Toto 70.5%, Magnum 67.1% of draws in this range</li>
+                <li><strong>Weighted Random:</strong> Hot digits have higher chance of selection</li>
+                <li><strong>Avoid Recent:</strong> Skips numbers that appeared recently</li>
+            </ul>
         `;
         document.getElementById('btn-show-algorithm').textContent = '📊 Hide Algorithm';
     } else {
