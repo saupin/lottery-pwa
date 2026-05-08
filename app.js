@@ -64,6 +64,13 @@ function setupTabs() {
             if (tab.dataset.tab === 'analysis') {
                 showSummary();
             }
+            
+            // Focus on number input when Check tab is clicked
+            if (tab.dataset.tab === 'check') {
+                setTimeout(() => {
+                    document.getElementById('number-input').focus();
+                }, 50);
+            }
         });
     });
 }
