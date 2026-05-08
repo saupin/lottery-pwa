@@ -218,49 +218,59 @@ function getMockData(lottery) {
     };
 }
 
-// Load results for selected date
+// Load results for selected date - ALL lotteries in one table
 async function loadResults() {
     const dateInput = document.getElementById('result-date').value;
     const display = document.getElementById('results-display');
     
     display.innerHTML = '<p class="hint">Loading...</p>';
     
-    const data = await loadLotteryData(currentLottery);
-    let draw = null;
-    
-    if (dateInput) {
-        draw = data.draws.find(d => d.date === dateInput);
+    // Load all 3 lotteries
+    const allData = {};
+    for (const lottery of ['damacai', 'toto', 'magnum']) {
+        allData[lottery] = await loadLotteryData(lottery);
     }
     
-    // If no date or no results for that date, show latest
-    if (!draw && data.draws && data.draws.length > 0) {
-        draw = data.draws[0]; // Latest draw
-        // Update date input to show the actual date
-        document.getElementById('result-date').value = draw.date;
+    // Find the draw (use first lottery as reference for dates)
+    let targetDate = dateInput;
+    if (!targetDate && allData.damacai.draws && allData.damacai.draws.length > 0) {
+        targetDate = allData.damacai.draws[0].date;
+        document.getElementById('result-date').value = targetDate;
     }
     
-    if (!draw) {
-        display.innerHTML = '<p class="hint">No results available</p>';
-        return;
+    // Build single table with all 3 lotteries
+    let html = `<h3 style="margin-bottom:15px;text-align:center">${formatDate(targetDate)}</h3>`;
+    html += `<table class="results-table">`;
+    html += `<tr><th>Lottery</th><th>1st</th><th>2nd</th><th>3rd</th></tr>`;
+    
+    const lotteryNames = { damacai: 'DaMaCai', toto: 'Toto', magnum: 'Magnum' };
+    
+    for (const lottery of ['damacai', 'toto', 'magnum']) {
+        const data = allData[lottery];
+        let draw = null;
+        
+        if (targetDate) {
+            draw = data.draws.find(d => d.date === targetDate);
+        }
+        
+        // If no date match, use latest
+        if (!draw) {
+            draw = data.draws[0];
+        }
+        
+        if (draw) {
+            const prizes = draw[lottery] || draw;
+            html += `<tr>
+                <td>${lotteryNames[lottery]}</td>
+                <td class="prize-number">${prizes['1st'] || '-'}</td>
+                <td class="prize-number">${prizes['2nd'] || '-'}</td>
+                <td class="prize-number">${prizes['3rd'] || '-'}</td>
+            </tr>`;
+        }
     }
     
-    const prizes = draw[currentLottery] || draw;
-    
-    display.innerHTML = `
-        <h3 style="margin-bottom:15px;text-align:center">${formatDate(dateInput)}</h3>
-        <div class="prize-item">
-            <span class="prize-label">1st</span>
-            <span class="prize-number">${prizes['1st'] || '-'}</span>
-        </div>
-        <div class="prize-item">
-            <span class="prize-label">2nd</span>
-            <span class="prize-number">${prizes['2nd'] || '-'}</span>
-        </div>
-        <div class="prize-item">
-            <span class="prize-label">3rd</span>
-            <span class="prize-number">${prizes['3rd'] || '-'}</span>
-        </div>
-    `;
+    html += `</table>`;
+    display.innerHTML = html;
 }
 
 // Load last results
