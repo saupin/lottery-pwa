@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupInstallPrompt();
     console.log('Install prompt setup done');
     
-    // Set default date to today for results
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('result-date').value = today;
+    // Set default date to last draw date (not today, as there's no draw every day)
+    // Load the latest draw date from the data files
+    setDefaultDate();
     
     // Focus on number input on launch
     setTimeout(() => {
@@ -186,6 +186,29 @@ function showResult(msg, type) {
     box.className = 'result-box';
     if (type === 'winner') box.classList.add('winner');
     else if (type === 'loser') box.classList.add('loser');
+}
+
+// Set default date to last draw date (avoiding days with no draws)
+async function setDefaultDate() {
+    try {
+        // Find the most recent date that has data for all 3 lotteries
+        const dates = [];
+        for (const lottery of ['damacai', 'toto', 'magnum']) {
+            const data = await loadLotteryData(lottery);
+            if (data.draws && data.draws.length > 0) {
+                dates.push(data.draws[0].date);
+            }
+        }
+        
+        if (dates.length > 0) {
+            // Use the earliest (most restrictive) date since all 3 need to have data
+            const lastDrawDate = dates.sort()[0];
+            document.getElementById('result-date').value = lastDrawDate;
+        }
+    } catch (e) {
+        // Fallback to today
+        document.getElementById('result-date').value = new Date().toISOString().split('T')[0];
+    }
 }
 
 // Load lottery data from local JSON files
