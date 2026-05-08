@@ -78,9 +78,9 @@ async function checkNumber() {
     const number = input.value.trim();
     const drawsInput = document.getElementById('draws-input').value;
     
-    // Limit "all" draws to prevent browser freeze (max 500 per lottery)
-    const MAX_DRAWS = 500;
-    const maxDraws = drawsInput ? Math.min(parseInt(drawsInput), MAX_DRAWS) : MAX_DRAWS;
+    // If draws input is blank/0, check ALL draws (no limit)
+    // If specified, use that number (max 1000 to prevent browser freeze)
+    const maxDraws = drawsInput ? Math.min(parseInt(drawsInput), 1000) : Infinity;
     
     if (!/^\d{4}$/.test(number)) {
         showResult('Please enter a valid 4-digit number', 'error');
@@ -110,7 +110,7 @@ async function checkNumber() {
         
         // Check draws (all or limited)
         const draws = data.draws || [];
-        const drawsToCheck = draws.slice(0, maxDraws);
+        const drawsToCheck = isFinite(maxDraws) ? draws.slice(0, maxDraws) : draws;
         totalDrawsChecked += drawsToCheck.length;
         
         for (const draw of drawsToCheck) {
