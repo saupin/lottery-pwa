@@ -237,7 +237,7 @@ function calculateProbability(number, lotteries) {
     html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
     
     results.forEach(r => {
-        html += `<div style="background:var(--very-light);padding:12px;border-radius:4px;text-align:center">`;
+        html += `<div style="background:${r.ratingColor}22;padding:12px;border-radius:4px;text-align:center;border:2px solid ${r.ratingColor}">`;
         html += `<div style="font-weight:700;color:${r.ratingColor}">${r.name}</div>`;
         html += `<div style="font-size:1.5rem;font-weight:700;color:${r.ratingColor}">${r.score}%</div>`;
         html += `<div style="font-size:0.75rem;color:var(--grey)">${r.matches}/4 pos + ${r.sumOk ? '✓' : '✗'} sum</div>`;
