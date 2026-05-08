@@ -1,6 +1,5 @@
 /* ============================================
-   LOTTERY.CO.UK THEMED STYLES
-   Clean, simple, number-focused design
+   LOTTERY.CO.UK THEME - Clean & Simple
    ============================================ */
 
 * {
@@ -11,33 +10,31 @@
 }
 
 :root {
-    --primary: #E31B23;  /* UK National Lottery red */
-    --primary-hover: #c9151c;
-    --secondary: #0c0c0c;
-    --success: #1D8F29;
-    --danger: #E31B23;
+    --red: #D31E28;  /* UK Lottery red */
+    --red-hover: #B01920;
     --dark: #1a1a1a;
-    --dark-grey: #4a4a4a;
-    --grey: #858585;
-    --light-grey: #e5e5e5;
+    --grey: #6e6e6e;
+    --light-grey: #e2e2e2;
     --very-light: #f5f5f5;
     --white: #ffffff;
-    --bg: #f5f5f5;
 }
 
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--very-light);
     color: var(--dark);
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
 }
+
+/* ============================================
+   APP CONTAINER
+   ============================================ */
 
 .app {
     max-width: 480px;
     margin: 0 auto;
-    min-height: 100vh;
     background: var(--white);
+    min-height: 100vh;
 }
 
 /* ============================================
@@ -45,53 +42,50 @@ body {
    ============================================ */
 
 header {
-    background: var(--primary);
+    background: var(--red);
     color: white;
-    padding: 18px 20px;
-    text-align: center;
+    padding: 16px 20px;
 }
 
 header h1 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    font-family: 'Georgia', serif;
 }
 
 /* ============================================
-   TAB NAVIGATION - Simple text tabs
+   TABS - Clean underline style
    ============================================ */
 
 .tabs {
     display: flex;
     background: var(--white);
-    border-bottom: 2px solid var(--light-grey);
+    border-bottom: 1px solid var(--light-grey);
 }
 
 .tab {
     flex: 1;
-    padding: 15px;
+    padding: 14px 10px;
     border: none;
     background: transparent;
     color: var(--grey);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
 }
 
 .tab:hover {
-    color: var(--primary);
+    color: var(--dark);
 }
 
 .tab.active {
-    color: var(--primary);
-    border-bottom: 3px solid var(--primary);
-    margin-bottom: -2px;
+    color: var(--red);
+    border-bottom: 3px solid var(--red);
 }
 
 main {
-    flex: 1;
-    padding: 20px;
+    padding: 15px;
     background: var(--very-light);
 }
 
@@ -101,149 +95,108 @@ main {
 
 .tab-content.active {
     display: block;
-    animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 /* ============================================
-   INPUT AREA
+   CHECK TAB
    ============================================ */
 
-.input-group {
-    margin-bottom: 20px;
+#check-tab {
     background: var(--white);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: -15px;
+    min-height: 60vh;
 }
 
 #number-input {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     font-size: 2rem;
     text-align: center;
     border: 2px solid var(--light-grey);
-    border-radius: 6px;
+    border-radius: 4px;
     margin-bottom: 15px;
-    letter-spacing: 12px;
+    letter-spacing: 10px;
     font-weight: 700;
-    font-family: 'Georgia', serif;
 }
 
 #number-input:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: var(--red);
 }
 
 .lottery-select {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 15px;
 }
 
 .lottery-select label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
     padding: 8px 14px;
     background: var(--very-light);
-    border-radius: 20px;
-    cursor: pointer;
+    border-radius: 4px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--dark-grey);
-}
-
-.lottery-select input:checked + span {
-    color: var(--primary);
-    font-weight: 700;
-}
-
-.lottery-select input {
-    display: none;
+    cursor: pointer;
 }
 
 .lottery-select label:has(input:checked) {
-    background: var(--primary);
+    background: var(--red);
     color: white;
 }
 
-.draws-input {
+.lottery-select input { display: none; }
+
+.draws-row {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    margin-top: 15px;
+    margin: 15px 0;
 }
 
-.draws-input label {
+.draws-row label {
     font-size: 0.85rem;
     color: var(--grey);
 }
 
 #draws-input {
-    width: 80px;
+    width: 70px;
     padding: 8px;
-    font-size: 0.9rem;
     text-align: center;
     border: 1px solid var(--light-grey);
     border-radius: 4px;
 }
 
-#draws-input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-.hint-text {
-    display: block;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--grey);
-    margin-top: 8px;
-}
-
-/* ============================================
-   BUTTONS - Simple solid colors
-   ============================================ */
-
 .button-row {
     display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .btn-primary {
     flex: 1;
-    padding: 16px;
-    background: var(--primary);
+    padding: 14px;
+    background: var(--red);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    background: var(--red-hover);
 }
 
 .btn-secondary {
-    padding: 16px 20px;
+    padding: 14px 16px;
     background: var(--very-light);
     color: var(--dark);
     border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
+    border-radius: 4px;
     font-weight: 600;
-    cursor: pointer;
 }
 
 .btn-secondary:hover {
@@ -251,141 +204,128 @@ main {
 }
 
 /* ============================================
-   RESULT BOX - Clean with large numbers
+   RESULT BOX
    ============================================ */
 
-.result-box {
+#check-result {
     margin-top: 20px;
-    padding: 20px;
-    background: var(--white);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+    background: var(--very-light);
+    border-radius: 4px;
+    border: 1px solid var(--light-grey);
 }
 
 .winner-header {
-    font-size: 1.4rem;
-    text-align: center;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--success);
-    margin-bottom: 8px;
-    font-family: 'Georgia', serif;
+    color: #1D8F29;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .result-summary {
-    font-size: 0.9rem;
-    text-align: center;
+    font-size: 0.85rem;
     color: var(--grey);
-    margin-bottom: 18px;
+    text-align: center;
 }
 
 .no-win {
-    font-size: 1.2rem;
-    text-align: center;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--dark);
+    text-align: center;
 }
 
-/* Results table - Simple clean look */
 .results-table {
     width: 100%;
-    border-collapse: collapse;
     margin-top: 15px;
-    font-size: 0.9rem;
+    border-collapse: collapse;
 }
 
 .results-table th {
     background: var(--light-grey);
-    padding: 12px 10px;
+    padding: 10px 8px;
+    font-size: 0.8rem;
     font-weight: 700;
     text-align: left;
     color: var(--dark);
 }
 
 .results-table td {
-    padding: 14px 10px;
+    padding: 12px 8px;
+    font-size: 0.95rem;
     border-bottom: 1px solid var(--light-grey);
     font-weight: 600;
-    color: var(--dark);
-}
-
-/* Winner state */
-.result-box.winner {
-    background: var(--white);
-    border-left: 5px solid var(--success);
-}
-
-.result-box.winner .winner-header {
-    color: var(--success);
 }
 
 /* ============================================
    RESULTS TAB
    ============================================ */
 
+#results-tab {
+    background: var(--white);
+    padding: 20px;
+    margin: -15px;
+}
+
 .lottery-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
-    background: var(--white);
-    padding: 6px;
-    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .lottery-tab {
     flex: 1;
-    padding: 12px;
+    padding: 12px 8px;
+    background: var(--very-light);
     border: none;
-    background: transparent;
-    border-radius: 6px;
-    cursor: pointer;
+    border-radius: 4px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--dark-grey);
+    cursor: pointer;
 }
 
 .lottery-tab.active {
-    background: var(--primary);
+    background: var(--red);
     color: white;
 }
 
-.date-selector {
+.date-row {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 #result-date {
     flex: 1;
     padding: 12px;
     border: 1px solid var(--light-grey);
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 4px;
 }
 
-.btn-small {
+.btn-go {
     padding: 12px 20px;
-    background: var(--primary);
+    background: var(--red);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     font-weight: 600;
-    cursor: pointer;
 }
 
 .results-container {
-    background: var(--white);
-    border-radius: 8px;
-    padding: 20px;
+    background: var(--very-light);
+    padding: 15px;
+    border-radius: 4px;
 }
 
-.prize-item {
+.prize-row {
     display: flex;
     justify-content: space-between;
     padding: 12px 0;
     border-bottom: 1px solid var(--light-grey);
 }
 
-.prize-item:last-child {
+.prize-row:last-child {
     border-bottom: none;
 }
 
@@ -397,28 +337,33 @@ main {
 .prize-number {
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: 'Georgia', serif;
-    color: var(--dark);
+    font-family: Georgia, serif;
 }
 
 /* ============================================
    ANALYSIS TAB
    ============================================ */
 
-.analysis-section {
+#analysis-tab {
     background: var(--white);
-    border-radius: 8px;
-    padding: 18px;
+    padding: 20px;
+    margin: -15px;
+}
+
+.analysis-section {
+    background: var(--very-light);
+    border-radius: 4px;
+    padding: 15px;
     margin-bottom: 15px;
 }
 
 .analysis-section h4 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--red);
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid var(--light-grey);
+    border-bottom: 1px solid var(--light-grey);
 }
 
 .summary-table {
@@ -427,20 +372,17 @@ main {
 }
 
 .summary-table th {
-    background: var(--very-light);
-    padding: 10px 8px;
+    background: var(--white);
+    padding: 8px;
     font-weight: 700;
     text-align: left;
-}
-
-.summary-table td {
-    padding: 10px 8px;
     border-bottom: 1px solid var(--light-grey);
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+.summary-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--light-grey);
+}
 
 footer {
     padding: 15px;
@@ -453,6 +395,5 @@ footer {
 .hint {
     text-align: center;
     color: var(--grey);
-    padding: 30px;
-    font-size: 0.9rem;
+    padding: 40px 20px;
 }
