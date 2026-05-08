@@ -429,22 +429,33 @@ main {
 }
 
 .results-table th {
-    background: rgba(0,0,0,0.08);
+    background: rgba(0,0,0,0.7);
     padding: 12px 10px;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: rgba(255,255,255,0.9);
+    color: white;
 }
 
 .results-table td {
     padding: 14px 10px;
     font-size: 0.95rem;
-    border-bottom: 1px solid var(--light);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    color: var(--dark);
+    font-weight: 600;
 }
 
 .results-table tr:last-child td {
     border-bottom: none;
+}
+
+/* Winner state - darker text for readability */
+.result-box.winner .results-table th {
+    background: rgba(0,0,0,0.5);
+}
+
+.result-box.winner .results-table td {
+    color: white;
 }
 
 /* ============================================
