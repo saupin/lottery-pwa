@@ -214,11 +214,11 @@ function calculateProbability(number, lotteries) {
         const adjustedProb = baseProb * (score / 50); // Scale by score
         const probPercent = (adjustedProb * 100).toFixed(3);
         
-        // Determine rating
+        // Determine rating with color
         let rating = 'Low';
-        let ratingColor = '#E31B23';
-        if (score >= 70) { rating = 'High'; ratingColor = '#1D8F29'; }
-        else if (score >= 50) { rating = 'Medium'; ratingColor = '#F59E0B'; }
+        let ratingColor = '#E31B23'; // red
+        if (score >= 75) { rating = 'High'; ratingColor = '#1D8F29'; } // green
+        else if (score > 25) { rating = 'Medium'; ratingColor = '#F59E0B'; } // yellow
         
         results.push({
             name: lotteryNames[lottery],
