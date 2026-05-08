@@ -46,6 +46,30 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-predict-toto').addEventListener('click', () => generatePrediction('toto'));
     document.getElementById('btn-predict-magnum').addEventListener('click', () => generatePrediction('magnum'));
     document.getElementById('btn-show-algorithm').addEventListener('click', showAlgorithm);
+    document.getElementById('btn-check-algorithm').addEventListener('click', () => {
+        const display = document.getElementById('check-algorithm-display');
+        const isHidden = display.style.display === 'none';
+        
+        if (isHidden) {
+            display.style.display = 'block';
+            display.innerHTML = `
+                <h4>📊 How Probability is Calculated</h4>
+                <ul>
+                    <li><strong>Position Match (80%):</strong> Each position checked against hot digits (top 3). 20% per match.</li>
+                    <li><strong>Sum in Range (25%):</strong> Digit sum must be between 40-60 (covers ~65-70% of draws)</li>
+                    <li><strong>First Digit Hot (5%):</strong> Extra bonus if first digit is the hottest</li>
+                    <li><strong>Total:</strong> Score = (position matches × 20) + sum bonus + first digit bonus</li>
+                </ul>
+                <p style="margin-top:10px;font-size:0.8rem;color:#6e6e6e">
+                    <strong>Color Guide:</strong> 🟢 Green ≥75% | 🟡 Yellow >25% & <75% | 🔴 Red ≤25%
+                </p>
+            `;
+            document.getElementById('btn-check-algorithm').textContent = '📊 Hide Algorithm';
+        } else {
+            display.style.display = 'none';
+            document.getElementById('btn-check-algorithm').textContent = '📊 View Algorithm';
+        }
+    });
     console.log('Button handlers attached');
     
     console.log('App initialization complete');
