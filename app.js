@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('result-date').value = today;
     
+    // Focus on number input on launch
+    setTimeout(() => {
+        document.getElementById('number-input').focus();
+    }, 100);
+    
     // Load results and analysis for first lottery by default
     setTimeout(() => {
         loadResults();
@@ -144,6 +149,9 @@ async function checkNumber() {
             `<p class="result-summary">Checked ${totalDrawsChecked} draw(s) across ${lotteries.join(', ')}</p>`;
         showResult(html, 'loser');
     }
+    
+    // Set focus back to input for next entry
+    input.focus();
 }
 
 // Clear input field
