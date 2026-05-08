@@ -161,12 +161,13 @@ async function checkNumber() {
     } else {
         let html = `<div class="no-win">❌ No wins for <strong>${number}</strong></div>`;
         html += `<p class="result-summary">Checked ${totalDrawsChecked} draw(s) across ${lotteries.join(', ')}</p>`;
-        
-        // Show probability for each lottery
-        html += calculateProbability(number, lotteries);
-        
         showResult(html, 'loser');
     }
+    
+    // Always show probability after check (win or no win)
+    const probHtml = calculateProbability(number, lotteries);
+    const box = document.getElementById('check-result');
+    box.innerHTML += probHtml;
     
     // Set focus back to input for next entry
     input.focus();
