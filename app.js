@@ -68,7 +68,10 @@ function setupTabs() {
             // Focus on number input when Check tab is clicked
             if (tab.dataset.tab === 'check') {
                 setTimeout(() => {
-                    document.getElementById('number-input').focus();
+                    const input = document.getElementById('number-input');
+                    input.value = '';
+                    input.focus();
+                    document.getElementById('check-result').innerHTML = '';
                 }, 50);
             }
         });
