@@ -39,10 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
     
     // Setup button handlers
-    document.getElementById('btn-check').addEventListener('click', () => {
-        document.getElementById('number-input').focus();
-        checkNumber();
-    });
+    document.getElementById('btn-check').addEventListener('click', checkNumber);
     document.getElementById('btn-clear').addEventListener('click', clearInput);
     document.getElementById('btn-go').addEventListener('click', loadResults);
     document.getElementById('btn-predict-dmc').addEventListener('click', () => generatePrediction('damacai'));
