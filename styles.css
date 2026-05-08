@@ -1,3 +1,7 @@
+/* ============================================
+   ENHANCED STYLES FOR LOTTERY PWA
+   ============================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,22 +10,43 @@
 }
 
 :root {
+    /* Primary palette - rich purple gradient */
     --primary: #6C5CE7;
-    --secondary: #a29bfe;
+    --primary-dark: #5849c4;
+    --primary-light: #a29bfe;
+    --secondary: #fDCB6E;
+    
+    /* Status colors */
     --success: #00b894;
+    --success-light: #55efc4;
     --danger: #ff7675;
+    --warning: #fdcb6e;
+    
+    /* Neutrals */
     --dark: #2d3436;
+    --dark-secondary: #636e72;
     --light: #dfe6e9;
-    --bg: #f5f6fa;
+    --light-2: #f5f6fa;
+    --light-3: #fafafa;
+    --white: #ffffff;
+    
+    /* Background */
+    --bg-gradient: linear-gradient(180deg, var(--light-2) 0%, var(--white) 100%);
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg-gradient);
     color: var(--dark);
     min-height: 100vh;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+/* ============================================
+   MAIN APP CONTAINER
+   ============================================ */
 
 .app {
     max-width: 480px;
@@ -29,344 +54,471 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    background: var(--white);
+    box-shadow: 0 0 40px rgba(108, 92, 231, 0.15);
+    border-radius: 0;
+    overflow: hidden;
 }
 
+/* ============================================
+   HEADER WITH GRADIENT
+   ============================================ */
+
 header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 50%, var(--primary-light) 100%);
+    background: linear-gradient(135deg, #6C5CE7 0%, #0984e3 100%);
     color: white;
-    padding: 20px;
+    padding: 25px 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative circles in header */
+header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 150px;
+    height: 150px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
 }
 
 header h1 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
+
+header h1::before {
+    content: '🎰';
+    font-size: 1.5rem;
+}
+
+/* ============================================
+   TAB NAVIGATION
+   ============================================ */
 
 .tabs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px;
+    border-radius: 30px;
+    position: relative;
 }
 
 .tab {
     flex: 1;
-    padding: 10px;
+    padding: 12px 16px;
     border: none;
-    background: rgba(255,255,255,0.2);
-    color: white;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
     border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.tab:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
 }
 
 .tab.active {
     background: white;
     color: var(--primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
+
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
 
 main {
     flex: 1;
-    padding: 20px;
+    padding: 25px 20px;
     overflow-y: auto;
+    background: var(--light-2);
 }
 
 .tab-content {
     display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 .tab-content.active {
     display: block;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   INPUT FIELDS
+   ============================================ */
+
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 #number-input {
     width: 100%;
-    padding: 15px;
-    font-size: 1.5rem;
+    padding: 18px;
+    font-size: 1.75rem;
     text-align: center;
     border: 2px solid var(--light);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    letter-spacing: 5px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    letter-spacing: 8px;
+    font-weight: 600;
+    background: var(--white);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
 }
 
 #number-input:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15), inset 0 2px 4px rgba(0,0,0,0.03);
 }
+
+#number-input::placeholder {
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* ============================================
+   LOTTERY CHECKBOXES
+   ============================================ */
 
 .lottery-select {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .lottery-select label {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 15px;
-    background: var(--light);
-    border-radius: 20px;
+    gap: 8px;
+    padding: 12px 18px;
+    background: var(--white);
+    border: 2px solid var(--light);
+    border-radius: 12px;
     cursor: pointer;
     font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.lottery-select label:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
 }
 
 .lottery-select input:checked + span {
     color: var(--primary);
+    font-weight: 700;
 }
+
+.lottery-select input:checked + span::before {
+    content: '✓ ';
+}
+
+.lottery-select input:checked + span {
+    position: relative;
+}
+
+/* Custom checkbox visual */
+.lottery-select input {
+    display: none;
+}
+
+.lottery-select label:has(input:checked) {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, 0.08);
+    color: var(--primary);
+}
+
+/* ============================================
+   DRAWS INPUT
+   ============================================ */
 
 .draws-input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    margin: 15px 0;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--white);
+    border-radius: 12px;
 }
 
 .draws-input label {
-    font-size: 0.9rem;
-    color: #636e72;
+    font-size: 0.85rem;
+    color: var(--dark-secondary);
+    font-weight: 600;
 }
 
 #draws-input {
-    width: 150px;
-    padding: 10px;
+    width: 160px;
+    padding: 12px;
     font-size: 1rem;
     text-align: center;
     border: 2px solid var(--light);
     border-radius: 10px;
+    background: var(--white);
+    transition: all 0.3s ease;
 }
 
 #draws-input:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
 }
 
 .hint-text {
     font-size: 0.75rem;
-    color: #b2bec3;
+    color: #a0aab5;
 }
 
-.analysis-section {
-    background: var(--light);
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.analysis-section h4 {
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
-
-.analysis-section p {
-    padding: 5px 0;
-    font-size: 0.9rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
+/* ============================================
+   BUTTONS
+   ============================================ */
 
 .button-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.button-row .btn-secondary {
-    flex: 0 0 auto;
-    min-width: 80px;
-}
-
-.button-row .btn-primary {
-    flex: 1;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .btn-primary {
     width: 100%;
-    padding: 15px;
-    background: var(--primary);
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 14px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.45);
 }
 
 .btn-primary:active {
-    transform: scale(0.98);
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(108, 92, 231, 0.3);
 }
 
 .btn-secondary {
-    padding: 12px 20px;
-    background: var(--light);
+    padding: 14px 24px;
+    background: var(--white);
     color: var(--dark);
-    border: none;
-    border-radius: 25px;
-    font-size: 0.85rem;
+    border: 2px solid var(--light);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
 }
 
 .btn-secondary:active {
-    background: var(--primary);
-    color: white;
+    transform: translateY(0);
 }
+
+.btn-small {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+/* ============================================
+   RESULT BOX
+   ============================================ */
 
 .result-box {
     margin-top: 20px;
-    padding: 20px;
-    background: var(--light);
-    border-radius: 10px;
+    padding: 25px;
+    background: var(--white);
+    border-radius: 16px;
     min-height: 100px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid var(--light);
 }
 
 .result-box.winner {
-    background: linear-gradient(135deg, #00b894, #55efc4);
+    background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
     color: white;
-    animation: pulse 1s infinite;
+    animation: winnerPulse 1.5s infinite;
+    border: none;
+    box-shadow: 0 8px 30px rgba(0, 184, 148, 0.4);
+}
+
+@keyframes winnerPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 184, 148, 0.4); }
+    50% { transform: scale(1.02); box-shadow: 0 12px 40px rgba(0, 184, 148, 0.5); }
 }
 
 .result-box.loser {
-    color: #636e72;
+    color: var(--dark-secondary);
 }
 
-/* Results Table */
-.winner-header {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    text-align: center;
-}
-
-.result-summary {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
+/* Results table styling */
 .results-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 8px;
+    margin-top: 15px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .results-table th {
-    background: rgba(0,0,0,0.1);
-    padding: 10px 8px;
-    font-size: 0.8rem;
-    text-align: left;
+    background: rgba(0,0,0,0.08);
+    padding: 12px 10px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.9);
 }
 
 .results-table td {
-    padding: 10px 8px;
-    font-size: 0.9rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    color: var(--dark);
+    padding: 14px 10px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--light);
 }
 
 .results-table tr:last-child td {
     border-bottom: none;
 }
 
-.no-win {
-    font-size: 1.1rem;
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-/* Summary Table */
-.summary-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-    margin-top: 10px;
-}
-
-.summary-table th {
-    background: rgba(0,0,0,0.1);
-    padding: 8px 6px;
-    text-align: left;
-    font-size: 0.75rem;
-}
-
-.summary-table td {
-    padding: 8px 6px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-}
+/* ============================================
+   RESULTS TAB - Lottery Tabs
+   ============================================ */
 
 .lottery-tabs {
     display: flex;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    background: var(--white);
+    padding: 6px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .lottery-tab {
     flex: 1;
-    padding: 10px;
-    border: 2px solid var(--light);
-    background: white;
+    padding: 14px 10px;
+    border: none;
+    background: transparent;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--dark-secondary);
+    transition: all 0.3s ease;
+}
+
+.lottery-tab:hover {
+    color: var(--primary);
 }
 
 .lottery-tab.active {
-    border-color: var(--primary);
-    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.35);
 }
 
 .date-selector {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 #result-date {
     flex: 1;
-    padding: 10px;
+    padding: 14px;
     border: 2px solid var(--light);
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 1rem;
+    background: var(--white);
+    transition: all 0.3s ease;
 }
 
-.btn-small {
-    padding: 10px 20px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+#result-date:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
 }
 
 .results-container {
-    background: var(--light);
-    border-radius: 10px;
-    padding: 20px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .prize-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--light);
 }
 
 .prize-item:last-child {
@@ -375,74 +527,110 @@ main {
 
 .prize-label {
     font-weight: 600;
-    color: #636e72;
+    color: var(--dark-secondary);
+    font-size: 0.9rem;
 }
 
 .prize-number {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-.analysis-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+/* ============================================
+   ANALYSIS TAB - Sections
+   ============================================ */
+
+.analysis-section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid var(--light);
 }
 
-.analysis-options .btn-secondary {
-    flex: 1;
-    min-width: 100px;
-}
-
-.hot-list, .cold-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.number-badge {
-    padding: 10px;
-    background: white;
-    border-radius: 8px;
-    text-align: center;
+.analysis-section h4 {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--primary);
     font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light);
 }
 
-.number-badge.hot {
-    background: linear-gradient(135deg, #ff7675, #fab1a0);
-    color: white;
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 10px;
 }
 
-.number-badge.cold {
-    background: linear-gradient(135deg, #74b9ff, #a29bfe);
+.summary-table th {
+    background: linear-gradient(135deg, var(--primary) 0%, #8B7CF7 100%);
     color: white;
+    padding: 12px 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
+
+.summary-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--light);
+    font-weight: 500;
+}
+
+.summary-table tr:hover {
+    background: rgba(108, 92, 231, 0.03);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
 
 footer {
-    padding: 15px;
+    padding: 20px;
     text-align: center;
-    color: #b2bec3;
-    font-size: 0.8rem;
+    color: #a0aab5;
+    font-size: 0.75rem;
+    background: var(--white);
+    border-top: 1px solid var(--light);
 }
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
 
 .hint {
     text-align: center;
-    color: #b2bec3;
-    padding: 30px;
+    color: #a0aab5;
+    padding: 40px 20px;
+    font-size: 0.9rem;
 }
 
-.winner-badge {
-    display: inline-block;
-    padding: 5px 10px;
-    background: var(--success);
-    color: white;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    margin-left: 10px;
+.winner-header {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.result-summary {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.no-win {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 8px;
+    font-weight: 600;
 }
