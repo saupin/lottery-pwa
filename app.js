@@ -192,7 +192,7 @@ function calculateProbability(number, lotteries) {
         // Count how many position digits match hot digits (top 3)
         let positionMatches = 0;
         for (let pos = 0; pos < 4; pos++) {
-            if (data.positionHot[pos].includes(digits[pos])) {
+            if (data.positionHot[pos].includes(String(digits[pos]))) {
                 positionMatches++;
             }
         }
@@ -207,7 +207,7 @@ function calculateProbability(number, lotteries) {
         if (sumInRange) score += 25;
         
         // First digit hot match adds 5%
-        if (data.positionHot[0].includes(digits[0])) score += 5;
+        if (data.positionHot[0].includes(String(digits[0]))) score += 5;
         
         // Base probability from historical data (~1 in 1000 for 1st prize)
         const baseProb = 0.001;
