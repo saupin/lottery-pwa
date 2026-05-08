@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-predict-dmc').addEventListener('click', () => generatePrediction('damacai'));
     document.getElementById('btn-predict-toto').addEventListener('click', () => generatePrediction('toto'));
     document.getElementById('btn-predict-magnum').addEventListener('click', () => generatePrediction('magnum'));
+    document.getElementById('btn-show-algorithm').addEventListener('click', showAlgorithm);
     console.log('Button handlers attached');
     
     console.log('App initialization complete');
@@ -589,4 +590,32 @@ function generateBasedOnPatterns(data) {
 
 function formatNumber(n) {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function showAlgorithm() {
+    const display = document.getElementById('algorithm-display');
+    const isHidden = display.style.display === 'none';
+    
+    if (isHidden) {
+        display.style.display = 'block';
+        display.innerHTML = `
+            <h4>📊 How the Prediction Works</h4>
+            <ul>
+                <li><strong>Position Analysis:</strong> Each digit position has different hot digits based on 2,029 historical draws</li>
+                <li><strong>Pos 1:</strong> Most frequent is <span class="highlight">5</span> (229 times)</li>
+                <li><strong>Pos 2:</strong> Most frequent is <span class="highlight">0</span> (222 times)</li>
+                <li><strong>Pos 3:</strong> Most frequent is <span class="highlight">9</span> (226 times)</li>
+                <li><strong>Pos 4:</strong> Most frequent is <span class="highlight">7</span> (229 times)</li>
+                <li><strong>Sum Validation:</strong> Generated numbers must have digit sum between <span class="highlight">40-60</span> (covers 60% of all draws)</li>
+                <li><strong>Digit Frequency:</strong> Hot digits 5,2,4,6,0 appear more often than 8,3,1,9</li>
+                <li><strong>Weighted Random:</strong> Hot digits have higher chance of selection</li>
+                <li><strong>Avoid Recent:</strong> Skips numbers that appeared in last 50 draws</li>
+            </ul>
+            <p style="margin-top:15px;font-size:0.85rem;color:#6e6e6e">Based on 2,029 DaMaCai draws from 2014-2026 (24,348 total digits analyzed)</p>
+        `;
+        document.getElementById('btn-show-algorithm').textContent = '📊 Hide Algorithm';
+    } else {
+        display.style.display = 'none';
+        document.getElementById('btn-show-algorithm').textContent = '📊 How does this work?';
+    }
 }

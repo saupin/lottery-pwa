@@ -496,3 +496,37 @@ footer {
     font-weight: 700;
     font-family: Georgia, serif;
 }
+
+/* Algorithm Box */
+.algorithm-box {
+    background: var(--white);
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+    border: 1px solid var(--light-grey);
+}
+
+.algorithm-box h4 {
+    color: var(--red);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.algorithm-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.algorithm-box li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--dark);
+}
+
+.algorithm-box .highlight {
+    color: var(--red);
+    font-weight: 700;
+}
