@@ -667,10 +667,34 @@ function generatePrediction(lottery) {
             Based on ${formatNumber(data.draws)} draws (${data.name})<br>
             Avg sum: ${data.avgSum} | ${data.sumCoverage} of draws fall in 40-60 range
         </div>
+        <button class="btn-primary" onclick="usePredictedNumber('${number}', '${lottery}')" style="margin-top:15px">Use This Number</button>
     `;
     
     // Scroll to prediction
     display.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function usePredictedNumber(number, lottery) {
+    // Set the number in the check input
+    document.getElementById('number-input').value = number;
+    
+    // Switch to Check tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelector('.tab[data-tab="check"]').classList.add('active');
+    document.getElementById('check-tab').classList.add('active');
+    
+    // Uncheck all lotteries first
+    document.querySelectorAll('.lottery-select input').forEach(cb => cb.checked = false);
+    
+    // Check the predicted lottery
+    const lotMap = { damacai: 'damacai', toto: 'toto', magnum: 'magnum' };
+    const cb = document.querySelector(`.lottery-select input[value="${lotMap[lottery]}"]`);
+    if (cb) cb.checked = true;
+    
+    // Focus and scroll to input
+    document.getElementById('number-input').focus();
+    document.getElementById('check-tab').scrollIntoView({ behavior: 'smooth' });
 }
 
 function generateBasedOnPatterns(data) {
