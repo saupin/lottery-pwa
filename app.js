@@ -693,21 +693,29 @@ function copyPredictedNumber(number) {
 }
 
 function addToMyNumbers(number, lottery) {
-    // Map lottery to telegram bot code
-    const lotMap = { damacai: 'd', toto: 't', magnum: 'm' };
-    const lotCode = lotMap[lottery] || 'd';
+    // Call local API to add number
+    const lotMap = { damacai: 'damacai', toto: 'toto', magnum: 'magnum' };
     
-    // Create deep link to Telegram bot with /add command
-    const message = `/add ${number} ${lotCode} 5`;
-    const telegramLink = `https://t.me/Loterry_sam?text=${encodeURIComponent(message)}`;
-    
-    // Show confirmation and open Telegram
-    const confirmed = confirm(`Add ${number} to MyNumbers for ${PREDICTION_DATA[lottery].name}?
-
-This will open Telegram with the command pre-filled.`);
-    if (confirmed) {
-        window.open(telegramLink, '_blank');
-    }
+    fetch('http://localhost:5000/api/add-number', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            number: number,
+            lottery: lotMap[lottery] || 'damacai',
+            draws: 5
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Added ${number} to MyNumbers!`);
+        } else {
+            alert(`Error: ${data.error || 'Failed to add'}`);
+        }
+    })
+    .catch(err => {
+        alert('Cannot connect to bot. Is it running?');
+    });
 }
 
 function generateBasedOnPatterns(data) {
