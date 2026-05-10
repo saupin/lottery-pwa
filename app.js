@@ -667,7 +667,10 @@ function generatePrediction(lottery) {
             Based on ${formatNumber(data.draws)} draws (${data.name})<br>
             Avg sum: ${data.avgSum} | ${data.sumCoverage} of draws fall in 40-60 range
         </div>
-        <button class="btn-primary" onclick="usePredictedNumber('${number}', '${lottery}')" style="margin-top:15px">Use This Number</button>
+        <div class="button-row" style="margin-top:15px">
+            <button class="btn-secondary" onclick="usePredictedNumber('${number}', '${lottery}')">Use This Number</button>
+            <button class="btn-primary" onclick="addToMyNumbers('${number}', '${lottery}')">Add to MyNumbers</button>
+        </div>
     `;
     
     // Scroll to prediction
@@ -695,6 +698,24 @@ function usePredictedNumber(number, lottery) {
     // Focus and scroll to input
     document.getElementById('number-input').focus();
     document.getElementById('check-tab').scrollIntoView({ behavior: 'smooth' });
+}
+
+function addToMyNumbers(number, lottery) {
+    // Map lottery to telegram bot code
+    const lotMap = { damacai: 'd', toto: 't', magnum: 'm' };
+    const lotCode = lotMap[lottery] || 'd';
+    
+    // Create deep link to Telegram bot with /add command
+    const message = `/add ${number} ${lotCode} 5`;
+    const telegramLink = `https://t.me/Loterry_sam?text=${encodeURIComponent(message)}`;
+    
+    // Show confirmation and open Telegram
+    const confirmed = confirm(`Add ${number} to MyNumbers for ${PREDICTION_DATA[lottery].name}?
+
+This will open Telegram with the command pre-filled.`);
+    if (confirmed) {
+        window.open(telegramLink, '_blank');
+    }
 }
 
 function generateBasedOnPatterns(data) {
