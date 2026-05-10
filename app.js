@@ -693,10 +693,11 @@ function copyPredictedNumber(number) {
 }
 
 function addToMyNumbers(number, lottery) {
-    // Call local API to add number
+    // Call local API to add number - use Tailscale IP
+    const API_BASE = 'http://100.79.233.32:5000';
     const lotMap = { damacai: 'damacai', toto: 'toto', magnum: 'magnum' };
     
-    fetch('http://localhost:5000/api/add-number', {
+    fetch(API_BASE + '/api/add-number', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
