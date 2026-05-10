@@ -667,9 +667,9 @@ function generatePrediction(lottery) {
             Based on ${formatNumber(data.draws)} draws (${data.name})<br>
             Avg sum: ${data.avgSum} | ${data.sumCoverage} of draws fall in 40-60 range
         </div>
-        <div class="button-row" style="margin-top:15px">
-            <button class="btn-secondary" onclick="copyPredictedNumber('${number}')">📋 Copy</button>
-            <button class="btn-primary" onclick="addToMyNumbers('${number}', '${lottery}')">Add to MyNumbers</button>
+        <div style="display:flex;gap:10px;margin-top:15px">
+            <button class="btn-secondary" style="flex:1" onclick="copyPredictedNumber('${number}')">📋 Copy</button>
+            <button class="btn-primary" style="flex:1" onclick="addToMyNumbers('${number}', '${lottery}')">Add to MyNumbers</button>
         </div>
     `;
     
