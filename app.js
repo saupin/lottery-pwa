@@ -668,7 +668,7 @@ function generatePrediction(lottery) {
             Avg sum: ${data.avgSum} | ${data.sumCoverage} of draws fall in 40-60 range
         </div>
         <div class="button-row" style="margin-top:15px">
-            <button class="btn-secondary" onclick="usePredictedNumber('${number}', '${lottery}')">Use This Number</button>
+            <button class="btn-secondary" onclick="copyPredictedNumber('${number}')">📋 Copy</button>
             <button class="btn-primary" onclick="addToMyNumbers('${number}', '${lottery}')">Add to MyNumbers</button>
         </div>
     `;
@@ -677,27 +677,19 @@ function generatePrediction(lottery) {
     display.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function usePredictedNumber(number, lottery) {
-    // Set the number in the check input
-    document.getElementById('number-input').value = number;
-    
-    // Switch to Check tab
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.querySelector('.tab[data-tab="check"]').classList.add('active');
-    document.getElementById('check-tab').classList.add('active');
-    
-    // Uncheck all lotteries first
-    document.querySelectorAll('.lottery-select input').forEach(cb => cb.checked = false);
-    
-    // Check the predicted lottery
-    const lotMap = { damacai: 'damacai', toto: 'toto', magnum: 'magnum' };
-    const cb = document.querySelector(`.lottery-select input[value="${lotMap[lottery]}"]`);
-    if (cb) cb.checked = true;
-    
-    // Focus and scroll to input
-    document.getElementById('number-input').focus();
-    document.getElementById('check-tab').scrollIntoView({ behavior: 'smooth' });
+function copyPredictedNumber(number) {
+    navigator.clipboard.writeText(number).then(() => {
+        alert(`Copied: ${number}`);
+    }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = number;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert(`Copied: ${number}`);
+    });
 }
 
 function addToMyNumbers(number, lottery) {
